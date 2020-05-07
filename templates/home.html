@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>聊天室</title>
+    <script type="text/javascript" charset="utf-8" src="{{static_url('js/jquery-1.11.3.min.js')}}"></script>
+</head>
+<body>
+    <div id="contents" style="width:500px;height:500px;overflow:auto"></div>
+    <div>
+        <input type="text" id="message"/>
+        <button onclick="sendMessage()">發送</button>
+    </div>
+    <script>
+        // 建立 WebSocket
+        var ws = new WebSocket("ws://localhost:8888/chat")
+
+        ws.onmessage = function(e){
+            $('#contents').append("<p>"+e.data+"</p>")
+        }
+
+        function sendMessage(){
+            console.log("dddd")
+            var message = $('#message').val()
+            ws.send(message)
+            $('#message').val()
+        }
+    </script>
+</body>
+</html>
